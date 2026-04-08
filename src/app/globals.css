@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fafaf9;
+  --foreground: #1c1917;
+  --primary: #0f766e;
+  --primary-light: #14b8a6;
+  --primary-dark: #115e59;
+  --accent: #f59e0b;
+  --surface: #ffffff;
+  --surface-hover: #f5f5f4;
+  --border: #e7e5e4;
+  --muted: #78716c;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  --color-accent: var(--accent);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Chemistry-specific styles */
+.chem-formula {
+  font-family: "Times New Roman", Times, serif;
+  letter-spacing: 0.02em;
+}
+
+.chem-formula sub {
+  font-size: 0.75em;
+  vertical-align: sub;
+}
+
+.chem-formula sup {
+  font-size: 0.75em;
+  vertical-align: super;
+}
+
+.chem-arrow {
+  font-size: 1.5em;
+  line-height: 1;
+  color: var(--primary);
+}
+
+/* Curly arrow for electron movement */
+.curly-arrow {
+  stroke: var(--primary);
+  stroke-width: 2;
+  fill: none;
+}
+
+.curly-arrow-head {
+  fill: var(--primary);
+}
