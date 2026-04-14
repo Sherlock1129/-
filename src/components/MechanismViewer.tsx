@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { MechanismStep, SideReaction } from "@/types";
+import { MechanismStep, SideReaction, KeyConcept } from "@/types";
 import ConceptModal from "./ConceptModal";
 import ChemFormula from "./ChemFormula";
 
@@ -16,7 +16,18 @@ export default function MechanismViewer({
 }: MechanismViewerProps) {
   const [expandedSteps, setExpandedSteps] = useState<Set<number>>(new Set());
   const [activeConcept, setActiveConcept] = useState<string | null>(null);
+  const [activeConceptFallback, setActiveConceptFallback] = useState<KeyConcept | undefined>();
   const [showSideReaction, setShowSideReaction] = useState<number | null>(null);
+
+  // Build a lookup of inline concepts from all steps (for AI-generated data)
+  const inlineConcepts: Record<string, KeyConcept> = {};
+  for (const step of steps) {
+    if (step.keyConcepts) {
+      for (const c of step.keyConcepts) {
+        inlineConcepts[c.id] = c;
+      }
+    }
+  }
 
   const toggleStep = (id: number) => {
     setExpandedSteps((prev) => {
@@ -78,7 +89,10 @@ export default function MechanismViewer({
                       {step.keyConcepts.map((concept) => (
                         <button
                           key={concept.id}
-                          onClick={() => setActiveConcept(concept.id)}
+                          onClick={() => {
+                            setActiveConcept(concept.id);
+                            setActiveConceptFallback(inlineConcepts[concept.id]);
+                          }}
                           className="rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-medium text-primary-dark transition-colors hover:bg-primary/10"
                           title={concept.brief}
                         >
@@ -263,7 +277,11 @@ export default function MechanismViewer({
       {activeConcept && (
         <ConceptModal
           conceptId={activeConcept}
-          onClose={() => setActiveConcept(null)}
+          fallback={activeConceptFallback}
+          onClose={() => {
+            setActiveConcept(null);
+            setActiveConceptFallback(undefined);
+          }}
         />
       )}
     </div>

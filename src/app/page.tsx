@@ -24,12 +24,18 @@ export default function HomePage() {
             深入理解每一步反应历程。从亲核取代到周环反应，
             交互式地探索反应机理、副反应和关键概念。
           </p>
-          <div className="flex justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/reactions"
               className="rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-dark"
             >
               浏览反应库
+            </Link>
+            <Link
+              href="/ai"
+              className="rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-amber-600"
+            >
+              🤖 AI 生成机理
             </Link>
             <Link
               href="/concepts"
@@ -91,6 +97,26 @@ export default function HomePage() {
               </Link>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* AI 生成入口 */}
+      <section className="mx-auto max-w-6xl px-4 py-16">
+        <div className="rounded-2xl border border-amber-200 bg-gradient-to-r from-amber-50 to-orange-50 p-8 text-center md:p-12">
+          <div className="mb-3 text-4xl">🤖</div>
+          <h2 className="mb-3 text-2xl font-bold text-foreground">
+            找不到你要的反应？让 AI 帮你
+          </h2>
+          <p className="mx-auto mb-6 max-w-lg text-sm text-muted">
+            输入任意有机反应名称或反应物，DeepSeek AI
+            为你实时生成完整的反应机理解析，包含分步机理、副反应和关键概念。
+          </p>
+          <Link
+            href="/ai"
+            className="inline-block rounded-xl bg-accent px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-amber-600"
+          >
+            开始使用 AI 生成
+          </Link>
         </div>
       </section>
 

@@ -2,15 +2,18 @@
 
 import { useEffect, useRef } from "react";
 import { concepts } from "@/data/concepts";
+import { KeyConcept } from "@/types";
 
 interface ConceptModalProps {
   conceptId: string;
+  /** AI 生成的概念（当预定义库中找不到时使用） */
+  fallback?: KeyConcept;
   onClose: () => void;
 }
 
-export default function ConceptModal({ conceptId, onClose }: ConceptModalProps) {
+export default function ConceptModal({ conceptId, fallback, onClose }: ConceptModalProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
-  const concept = concepts[conceptId];
+  const concept = concepts[conceptId] ?? fallback;
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -25,6 +28,8 @@ export default function ConceptModal({ conceptId, onClose }: ConceptModalProps) 
   }, [onClose]);
 
   if (!concept) return null;
+
+  const hasDetailed = concept.detailed && concept.detailed.length > 0;
 
   return (
     <div
@@ -62,30 +67,35 @@ export default function ConceptModal({ conceptId, onClose }: ConceptModalProps) 
           </button>
         </div>
 
-        <div className="prose prose-sm max-w-none">
-          {concept.detailed.split("\n\n").map((paragraph, i) => (
-            <div key={i} className="mb-4">
-              {paragraph.split("\n").map((line, j) => {
-                // Handle markdown-style bold
-                const parts = line.split(/(\*\*[^*]+\*\*)/g);
-                return (
-                  <p key={j} className="mb-1 text-sm leading-relaxed text-foreground/80">
-                    {parts.map((part, k) => {
-                      if (part.startsWith("**") && part.endsWith("**")) {
-                        return (
-                          <strong key={k} className="font-semibold text-foreground">
-                            {part.slice(2, -2)}
-                          </strong>
-                        );
-                      }
-                      return <span key={k}>{part}</span>;
-                    })}
-                  </p>
-                );
-              })}
-            </div>
-          ))}
-        </div>
+        {hasDetailed ? (
+          <div className="prose prose-sm max-w-none">
+            {concept.detailed.split("\n\n").map((paragraph, i) => (
+              <div key={i} className="mb-4">
+                {paragraph.split("\n").map((line, j) => {
+                  const parts = line.split(/(\*\*[^*]+\*\*)/g);
+                  return (
+                    <p key={j} className="mb-1 text-sm leading-relaxed text-foreground/80">
+                      {parts.map((part, k) => {
+                        if (part.startsWith("**") && part.endsWith("**")) {
+                          return (
+                            <strong key={k} className="font-semibold text-foreground">
+                              {part.slice(2, -2)}
+                            </strong>
+                          );
+                        }
+                        return <span key={k}>{part}</span>;
+                      })}
+                    </p>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm leading-relaxed text-foreground/80">
+            {concept.brief}
+          </p>
+        )}
 
         {concept.relatedConcepts && concept.relatedConcepts.length > 0 && (
           <div className="mt-6 border-t border-border pt-4">
