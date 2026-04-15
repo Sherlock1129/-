@@ -55,6 +55,19 @@ npm run dev
 
 打开 http://localhost:3000 即可。
 
+### 4.1 一键启动（无需手动打开终端）
+
+项目根目录已提供一键启动脚本：
+
+- Windows：双击 `start-app.bat`
+- macOS：双击 `start-app.command`
+- Linux：运行 `./start-app.sh`
+
+脚本会自动完成：
+1. 首次运行时检测依赖并执行 `npm install`
+2. 启动开发服务器 `npm run dev`
+3. 自动尝试打开浏览器 `http://localhost:3000`
+
 ### 5. 构建 & 生产运行
 
 ```bash
