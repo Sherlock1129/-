@@ -1,16 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fafaf9;
-  --foreground: #1c1917;
-  --primary: #0f766e;
-  --primary-light: #14b8a6;
-  --primary-dark: #115e59;
-  --accent: #f59e0b;
+  /* 调色板：更精致的 stone + teal 配色 */
+  --background: #fafaf8;
+  --foreground: #18181b;
+  --primary: #0d9488;        /* teal-600 */
+  --primary-light: #14b8a6;  /* teal-500 */
+  --primary-dark: #0f766e;   /* teal-700 */
+  --primary-darker: #134e4a; /* teal-900 */
+  --accent: #ea580c;         /* orange-600 */
+  --accent-light: #f97316;
   --surface: #ffffff;
   --surface-hover: #f5f5f4;
+  --surface-subtle: #f9f9f7;
   --border: #e7e5e4;
+  --border-strong: #d6d3d1;
   --muted: #78716c;
+  --muted-light: #a8a29e;
 }
 
 @theme inline {
@@ -19,34 +25,67 @@
   --color-primary: var(--primary);
   --color-primary-light: var(--primary-light);
   --color-primary-dark: var(--primary-dark);
+  --color-primary-darker: var(--primary-darker);
   --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
   --color-surface: var(--surface);
   --color-surface-hover: var(--surface-hover);
+  --color-surface-subtle: var(--surface-subtle);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-muted: var(--muted);
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --color-muted-light: var(--muted-light);
+  --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "SF Mono", "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
 }
 
-/* Chemistry-specific styles */
+::selection {
+  background: var(--primary);
+  color: white;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 10px;
+  border: 2px solid var(--background);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-light);
+}
+
+/* 化学式 */
 .chem-formula {
-  font-family: "Times New Roman", Times, serif;
-  letter-spacing: 0.02em;
+  font-family: "Cambria Math", "STIX Two Math", "Times New Roman", Times, serif;
+  letter-spacing: 0.01em;
 }
 
 .chem-formula sub {
-  font-size: 0.75em;
+  font-size: 0.72em;
   vertical-align: sub;
 }
 
 .chem-formula sup {
-  font-size: 0.75em;
+  font-size: 0.72em;
   vertical-align: super;
 }
 
@@ -56,7 +95,6 @@ body {
   color: var(--primary);
 }
 
-/* Curly arrow for electron movement */
 .curly-arrow {
   stroke: var(--primary);
   stroke-width: 2;
@@ -65,4 +103,91 @@ body {
 
 .curly-arrow-head {
   fill: var(--primary);
+}
+
+/* 渐变文字 */
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-darker) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* 玻璃态 */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px) saturate(1.5);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+}
+
+/* 网格背景 */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(0 0 0 / 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(0 0 0 / 0.025) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* 光晕 */
+.glow-primary {
+  box-shadow: 0 0 40px -10px rgb(13 148 136 / 0.3);
+}
+
+/* 动画 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.9); opacity: 1; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.animate-pulse-ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: currentColor;
+  opacity: 0.4;
+  animation: pulse-ring 1.5s ease-out infinite;
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--surface) 0%,
+    var(--surface-hover) 50%,
+    var(--surface) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* 工具类：text-balance（标题换行优化） */
+.text-balance {
+  text-wrap: balance;
 }
