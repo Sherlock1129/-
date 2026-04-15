@@ -95,9 +95,9 @@ export interface Reaction {
     products: string[];
   };
   /** 反应物 */
-  reactants: Molecule[];
+  reactants?: Molecule[];
   /** 产物 */
-  products: Molecule[];
+  products?: Molecule[];
   /** 反应条件 */
   conditions: string;
   /** 主反应机理 */
@@ -108,4 +108,21 @@ export interface Reaction {
   keyPoints: string[];
   /** 影响因素 */
   factors?: string[];
+}
+
+/** 审核结果 */
+export interface ReviewResult {
+  /** 正确性评分 0-100 */
+  correctness: number;
+  status: "approved" | "minor-issues" | "major-issues";
+  summary: string;
+  issues: ReviewIssue[];
+  revisedReaction: Reaction;
+}
+
+export interface ReviewIssue {
+  severity: "critical" | "warning" | "suggestion";
+  location: string;
+  problem: string;
+  correction: string;
 }
