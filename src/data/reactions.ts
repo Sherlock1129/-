@@ -1,383 +1,423 @@
 import { Reaction } from "@/types";
 
 export const reactions: Reaction[] = [
-  // ========== SN2 反应 ==========
   {
     id: "sn2",
     name: "SN2 亲核取代反应",
     nameEn: "SN2 Nucleophilic Substitution",
     category: "substitution",
     summary:
-      "双分子亲核取代反应：亲核试剂从离去基团背面进攻碳原子，新键形成与旧键断裂同时发生（协同机理），构型完全翻转。",
+      "双分子亲核取代反应：亲核试剂背面进攻亲电碳，成键与断键同步发生，伴随构型翻转。",
     equation: {
       reactants: ["HO⁻", "CH₃Br"],
-      conditions: ["丙酮溶剂"],
+      conditions: ["丙酮"],
       products: ["CH₃OH", "Br⁻"],
     },
     reactants: [
-      {
-        condensed: "HO⁻",
-        name: "氢氧根离子",
-        smiles: "[OH-]",
-        role: "nucleophile",
-      },
-      {
-        condensed: "CH₃Br",
-        name: "溴甲烷",
-        smiles: "CBr",
-        role: "reactant",
-      },
+      { condensed: "HO⁻", name: "氢氧根", smiles: "[OH-]", role: "nucleophile" },
+      { condensed: "CH₃Br", name: "溴甲烷", smiles: "CBr", role: "reactant" },
     ],
     products: [
-      {
-        condensed: "CH₃OH",
-        name: "甲醇",
-        smiles: "CO",
-        role: "product",
-      },
-      {
-        condensed: "Br⁻",
-        name: "溴离子",
-        smiles: "[Br-]",
-        role: "leaving-group",
-      },
+      { condensed: "CH₃OH", name: "甲醇", smiles: "CO", role: "product" },
+      { condensed: "Br⁻", name: "溴离子", smiles: "[Br-]", role: "leaving-group" },
     ],
-    conditions: "非质子极性溶剂（如丙酮、DMSO）",
+    conditions: "非质子极性溶剂（DMSO、DMF、丙酮）",
     mechanism: [
       {
         id: 1,
-        title: "亲核试剂背面进攻",
-        description:
-          "OH⁻ 从 C-Br 键的背面（180°方向）接近碳原子，其孤对电子指向碳的σ*反键轨道。",
+        title: "背面进攻与电子转移",
+        description: "OH⁻ 孤对电子进攻 C-Br 反键轨道，Br⁻ 同步离去。",
         detailedExplanation:
-          "**① 电子转移**\nOH⁻ 的氧原子孤对电子（HOMO）流向 C-Br σ* 反键轨道（LUMO），同时 C-Br 键的成键电子全部转移到 Br，以 Br⁻ 形式离去。整个过程为一步协同，没有中间体。\n\n**② 轨道分析**\n亲核试剂必须从离去基团的正对面（背面，180°）进攻，这是因为 C-Br 的 σ* 轨道最大叶片位于 Br 的背面。只有从这个方向进攻，HOMO（OH⁻ 的孤对）和 LUMO（σ*）才能有效重叠。正面进攻会产生节点，轨道重叠为零，反应无法发生。\n\n**③ 几何/立体化学**\n反应过程中，中心碳原子从 sp³ 四面体逐渐转为 sp² 三角双锥（过渡态），三个 H 原子位于赤道面。随着 Br⁻ 离去、OH 形成键，H 原子像雨伞被风吹翻一样翻转到碳原子另一侧，最终碳重新变回 sp³，但构型完全翻转（R ↔ S）。\n\n**④ 动力学与能量**\n这是决速步也是唯一步骤：v = k[Nu⁻][R-X]，二级反应。活化能由过渡态的稳定性决定：好的亲核试剂、弱的 C-X 键、非质子极性溶剂都能降低 Ea。\n\n**⑤ 关键影响因素**\n- 空间位阻：CH₃X > 1° > 2° >> 3°（3° 几乎不反应）\n- 亲核试剂：极化性越大越快（I⁻ > Br⁻ > Cl⁻）\n- 溶剂：非质子极性溶剂（DMSO、DMF、丙酮）不溶剂化阴离子，亲核性不受压制",
-        structures: ["HO⁻ ···· CH₃—Br"],
+          "**1. 电子转移**：亲核体孤对电子从背面进攻，C-Br 键电子对转移至 Br。\n\n**2. 轨道分析**：HOMO（Nu 的孤对）与 LUMO（σ* C-Br）发生同相重叠。\n\n**3. 立体化学**：背面进攻导致中心碳构型翻转（Walden inversion）。\n\n**4. 动力学**：一步协同、二级反应，v = k[Nu⁻][R-X]。\n\n**5. 关键因素**：低位阻底物、强亲核体、好离去基更有利。",
+        structures: ["HO⁻ + CH₃Br → [HO···CH₃···Br]⁻‡ → CH₃OH + Br⁻"],
         keyConcepts: [
-          {
-            id: "nucleophile",
-            name: "亲核试剂",
-            brief: "富含电子、能够提供电子对进攻缺电子中心的物种。",
-            detailed: "",
-          },
-          {
-            id: "leaving-group",
-            name: "离去基团",
-            brief: "在反应中带着一对电子离去的基团。",
-            detailed: "",
-          },
-        ],
-      },
-      {
-        id: 2,
-        title: "过渡态形成",
-        description:
-          "形成五配位过渡态 [HO···C···Br]⁻，碳原子呈 sp² 杂化，三个氢原子在赤道平面。",
-        detailedExplanation:
-          "在过渡态中：\n\n1. **碳原子几何构型**：碳从 sp³ 四面体变为类似 sp² 的三角双锥结构\n2. **键的状态**：C-OH 键部分形成（虚线），C-Br 键部分断裂（虚线），三个 C-H 键位于赤道平面\n3. **电荷分布**：负电荷分散在 OH 和 Br 之间\n4. **能量**：这是整个反应路径的能量最高点\n\n过渡态不能被分离，但可以通过动力学实验间接推断其结构。SN2 的速率方程 v = k[Nu⁻][R-X] 证明了两个分子同时参与决速步。",
-        structures: ["[HO⸱⸱⸱C(H₃)⸱⸱⸱Br]⁻‡"],
-        keyConcepts: [
-          {
-            id: "transition-state",
-            name: "过渡态",
-            brief: "反应过程中能量最高点的结构，不可分离。",
-            detailed: "",
-          },
-        ],
-      },
-      {
-        id: 3,
-        title: "Walden 翻转完成",
-        description:
-          "C-OH 键完全形成，C-Br 键完全断裂，Br⁻ 离去。碳上三个氢像雨伞翻转一样翻转到另一侧，构型翻转。",
-        detailedExplanation:
-          "产物形成过程中：\n\n1. **键的变化**：C-O 键变为完整的σ键，C-Br 键完全断裂，Br⁻ 带着一对电子离去\n2. **构型翻转**：碳原子的三个取代基从一面翻转到另一面，就像风吹翻雨伞。如果原来是 R 构型，产物就是 S 构型\n3. **立体专一性**：100% 构型翻转，没有任何消旋化\n\n这个构型翻转（Walden 翻转）是 SN2 反应的标志性特征，也是区分 SN1 和 SN2 的关键实验证据。",
-        structures: ["CH₃OH + Br⁻"],
-        keyConcepts: [
-          {
-            id: "walden-inversion",
-            name: "Walden 翻转",
-            brief: "SN2 反应中手性中心构型完全翻转。",
-            detailed: "",
-          },
+          { id: "nucleophile", name: "亲核试剂", brief: "给电子对形成新键", detailed: "" },
+          { id: "walden-inversion", name: "Walden 翻转", brief: "SN2 的立体专一性特征", detailed: "" },
         ],
       },
     ],
     sideReactions: [
       {
-        name: "E2 消除反应",
-        description:
-          "当亲核试剂同时是强碱时（如 OH⁻），可能发生 E2 消除生成烯烃。对于甲基底物几乎不发生，但随着底物位阻增大，E2 比例增加。",
-        condition: "强碱、底物位阻大、温度高",
-        products: ["CH₂=CH₂ (若底物为 CH₃CH₂Br)", "H₂O", "Br⁻"],
+        name: "E2 竞争",
+        description: "强碱条件下可能同时夺取 β-H 发生消除。",
+        condition: "强碱、升温、位阻增大",
+        products: ["烯烃", "H₂O", "Br⁻"],
       },
     ],
     keyPoints: [
-      "一步协同机理，无中间体",
-      "速率方程：v = k[Nu⁻][底物]，二级反应",
-      "构型完全翻转（Walden 翻转）",
-      "底物活性：CH₃X > 1° > 2° >> 3°（3° 几乎不发生）",
-      "强亲核试剂、非质子极性溶剂有利",
+      "一步协同反应，无中间体",
+      "速率取决于亲核体与底物浓度",
+      "构型反转是机制证据",
+      "位阻越大速率越慢",
+      "非质子极性溶剂有利",
     ],
-    factors: [
-      "底物结构：位阻越小越有利（甲基 > 伯 > 仲 >> 叔）",
-      "亲核试剂：亲核性越强速率越快",
-      "离去基团：离去能力越好速率越快（I⁻ > Br⁻ > Cl⁻）",
-      "溶剂：非质子极性溶剂（DMSO、DMF、丙酮）最有利",
-    ],
+    factors: ["底物位阻", "亲核性", "离去基能力", "溶剂效应"],
   },
-
-  // ========== 亲电加成反应 ==========
   {
-    id: "electrophilic-addition-hbr",
-    name: "HBr 对烯烃的亲电加成",
-    nameEn: "Electrophilic Addition of HBr to Alkenes",
-    category: "addition",
-    summary:
-      "HBr 加成到不对称烯烃上，遵循 Markovnikov 规则：H 加到含氢较多的碳上，Br 加到含氢较少的碳上。反应经过碳正离子中间体。",
+    id: "sn1",
+    name: "SN1 亲核取代反应",
+    nameEn: "SN1 Nucleophilic Substitution",
+    category: "substitution",
+    summary: "单分子亲核取代：先离解形成碳正离子，再被亲核体进攻，常出现消旋与重排。",
     equation: {
-      reactants: ["CH₃CH=CH₂", "HBr"],
-      conditions: [],
-      products: ["CH₃CHBrCH₃"],
+      reactants: ["(CH₃)₃CBr", "H₂O"],
+      conditions: ["室温"],
+      products: ["(CH₃)₃COH", "HBr"],
     },
-    reactants: [
-      {
-        condensed: "CH₃CH=CH₂",
-        name: "丙烯",
-        smiles: "CC=C",
-        role: "reactant",
-      },
-      {
-        condensed: "HBr",
-        name: "溴化氢",
-        smiles: "Br",
-        role: "electrophile",
-      },
-    ],
-    products: [
-      {
-        condensed: "CH₃CHBrCH₃",
-        name: "2-溴丙烷",
-        smiles: "CC(Br)C",
-        role: "product",
-      },
-    ],
-    conditions: "室温，无需催化剂",
+    conditions: "极性质子溶剂中进行，三级底物最典型",
     mechanism: [
       {
         id: 1,
-        title: "质子化——形成碳正离子",
-        description:
-          "烯烃的π电子作为亲核试剂进攻 HBr 的 H（亲电试剂），双键断裂，H 加到双键一端，另一端碳成为碳正离子。",
+        title: "离去基团离解",
+        description: "C-Br 键异裂，形成叔碳正离子。",
         detailedExplanation:
-          "这一步是决速步（慢步骤）：\n\n1. **烯烃的亲核性**：C=C 双键的π电子云位于碳骨架上下两侧，电子密度高，可以作为亲核试剂\n2. **HBr 的极化**：H-Br 键中 H 带部分正电荷（δ+），是亲电中心\n3. **区域选择性**：H⁺ 优先加到含氢多的碳上（C1），使 C2 成为更稳定的 2° 碳正离子，而不是加到 C2 产生不稳定的 1° 碳正离子\n\n这就是 **Markovnikov 规则** 的本质：反应经过更稳定的碳正离子中间体。",
-        structures: [
-          "CH₃CH=CH₂ + H⁺ → CH₃C⁺H—CH₃ (2° 碳正离子)",
-        ],
+          "**1. 电子转移**：C-Br 键电子完全转移到 Br，形成 Br⁻。\n\n**2. 轨道分析**：离解后碳中心形成空 p 轨道，成为强亲电中心。\n\n**3. 立体化学**：碳正离子是平面结构，后续进攻两面都可发生。\n\n**4. 动力学**：该步是决速步，v = k[R-X]。\n\n**5. 关键因素**：碳正离子稳定性和溶剂极性是核心。",
+        structures: ["(CH₃)₃C-Br → (CH₃)₃C⁺ + Br⁻"],
         keyConcepts: [
-          {
-            id: "markovnikov",
-            name: "Markovnikov 规则",
-            brief: "H加到含氢较多的碳上，经过更稳定的碳正离子。",
-            detailed: "",
-          },
-          {
-            id: "carbocation",
-            name: "碳正离子",
-            brief: "带正电荷的碳原子，sp²杂化。",
-            detailed: "",
-          },
+          { id: "carbocation", name: "碳正离子", brief: "SN1 核心中间体", detailed: "" },
+          { id: "leaving-group", name: "离去基团", brief: "带电子离去", detailed: "" },
         ],
       },
       {
         id: 2,
-        title: "Br⁻ 亲核进攻碳正离子",
-        description:
-          "Br⁻（亲核试剂）迅速进攻缺电子的碳正离子，形成 C-Br 键，得到产物 2-溴丙烷。",
+        title: "亲核进攻与去质子化",
+        description: "水进攻碳正离子，随后失去质子得到醇。",
         detailedExplanation:
-          "这一步是快步骤：\n\n1. **碳正离子的活性**：2° 碳正离子虽然比 1° 稳定，但仍然是高度活泼的缺电子物种，会迅速与亲核试剂反应\n2. **Br⁻ 的进攻**：Br⁻ 可以从碳正离子平面的上方或下方进攻（碳正离子是平面 sp² 结构）\n3. **立体化学**：因为碳正离子是平面的，Br⁻ 从两面进攻的概率相等，所以如果该碳是手性中心，产物是外消旋体\n\n最终得到 Markovnikov 加成产物：CH₃CHBrCH₃",
-        structures: ["CH₃C⁺H—CH₃ + Br⁻ → CH₃CHBrCH₃"],
+          "**1. 电子转移**：H₂O 孤对进攻碳正离子形成 C-O 键，再经去质子化中和。\n\n**2. 轨道分析**：Nu 的 lone pair 与碳正离子空 p 轨道重叠。\n\n**3. 立体化学**：平面中间体导致外消旋倾向。\n\n**4. 动力学**：进攻通常快于离解。\n\n**5. 关键因素**：亲核体强弱影响次级速率但不改决速步。",
+        structures: ["(CH₃)₃C⁺ + H₂O → (CH₃)₃COH₂⁺ → (CH₃)₃COH + H⁺"],
         keyConcepts: [
-          {
-            id: "electrophile",
-            name: "亲电试剂",
-            brief: "缺电子、能够接受电子对的物种。",
-            detailed: "",
-          },
+          { id: "racemization", name: "消旋化", brief: "平面中间体导致立体信息丢失", detailed: "" },
         ],
       },
     ],
     sideReactions: [
       {
-        name: "反 Markovnikov 加成（自由基加成）",
-        description:
-          "在过氧化物（ROOR）存在下，HBr 通过自由基机理加成，得到反马氏产物。Br 加到含氢多的碳上。",
-        condition: "过氧化物存在，光照或加热",
-        products: ["CH₃CH₂CH₂Br (1-溴丙烷)"],
-        mechanism: [
-          {
-            id: 1,
-            title: "引发：生成 Br 自由基",
-            description:
-              "过氧化物均裂产生 RO·，RO· 夺取 HBr 的 H 生成 Br·。",
-            detailedExplanation:
-              "链引发阶段：\n1. ROOR → 2 RO·（过氧键均裂）\n2. RO· + HBr → ROH + Br·（Br自由基生成）\n\n过氧化物的 O-O 键较弱（约150 kJ/mol），容易在加热或光照下均裂。",
-            structures: ["ROOR → 2 RO·", "RO· + HBr → ROH + Br·"],
-          },
-          {
-            id: 2,
-            title: "增长：Br· 加成到烯烃",
-            description:
-              "Br· 加到双键末端碳（含氢多的碳），生成更稳定的 2° 碳自由基。",
-            detailedExplanation:
-              "Br· 加到 C1 生成 2° 碳自由基（更稳定），而不是加到 C2 生成 1° 碳自由基。\n\n自由基稳定性顺序与碳正离子相同：3° > 2° > 1° > CH₃·\n\n注意：这里 Br 加到了含氢多的碳上——与离子型加成的区域选择性相反！",
-            structures: [
-              "CH₃CH=CH₂ + Br· → CH₃ĊH—CH₂Br",
-            ],
-          },
-          {
-            id: 3,
-            title: "增长：碳自由基夺取 H",
-            description:
-              "碳自由基从另一个 HBr 分子夺取 H，生成产物并再生 Br·。",
-            detailedExplanation:
-              "CH₃ĊH—CH₂Br + HBr → CH₃CH₂CH₂Br + Br·\n\n再生的 Br· 继续与下一个烯烃分子反应，形成链式反应。这就是为什么只需要催化量的过氧化物就能引发反应。",
-            structures: [
-              "CH₃ĊH—CH₂Br + HBr → CH₃CH₂CH₂Br + Br·",
-            ],
-          },
-        ],
-      },
-      {
-        name: "碳正离子重排",
-        description:
-          "如果初始碳正离子相邻有更稳定的碳正离子位置，可能发生 1,2-氢迁移或 1,2-烷基迁移重排。",
-        condition: "底物可生成更稳定碳正离子时",
-        products: ["重排产物"],
+        name: "E1 消除",
+        description: "碳正离子可被碱夺取 β-H 形成烯烃。",
+        condition: "升温、碱性增强",
+        products: ["异丁烯"],
       },
     ],
-    keyPoints: [
-      "两步反应：质子化（慢）→ 亲核进攻（快）",
-      "遵循 Markovnikov 规则（H加到含氢多的碳）",
-      "经过碳正离子中间体",
-      "可能发生碳正离子重排",
-      "过氧化物存在下转为自由基机理（反马氏）",
-    ],
-    factors: [
-      "烯烃取代度：取代度越高，π电子密度越大，反应越快",
-      "HX 活性：HI > HBr > HCl > HF",
-      "过氧化物效应仅对 HBr 显著（HCl 和 HI 的自由基链反应热力学不利）",
-    ],
+    keyPoints: ["先离解后进攻", "速率只与底物有关", "易重排", "常伴消旋"],
+    factors: ["底物取代度", "溶剂极性", "离去基能力", "温度"],
   },
-
-  // ========== E1 消除反应 ==========
   {
     id: "e1",
     name: "E1 消除反应",
     nameEn: "E1 Elimination",
     category: "elimination",
-    summary:
-      "单分子消除反应：分两步进行，先慢步骤离解生成碳正离子，再由碱夺取β-H消除得到烯烃。遵循 Zaitsev 规则。",
+    summary: "先形成碳正离子再失去 β-H 形成烯烃，遵循 Zaitsev 规则。",
     equation: {
       reactants: ["(CH₃)₃CBr"],
       conditions: ["EtOH, 加热"],
       products: ["(CH₃)₂C=CH₂", "HBr"],
     },
-    reactants: [
-      {
-        condensed: "(CH₃)₃CBr",
-        name: "2-溴-2-甲基丙烷（叔丁基溴）",
-        smiles: "CC(C)(C)Br",
-        role: "reactant",
-      },
-    ],
-    products: [
-      {
-        condensed: "(CH₃)₂C=CH₂",
-        name: "2-甲基丙烯（异丁烯）",
-        smiles: "CC(=C)C",
-        role: "product",
-      },
-      {
-        condensed: "HBr",
-        name: "溴化氢",
-        role: "product",
-      },
-    ],
-    conditions: "质子溶剂（如乙醇、水），加热",
+    conditions: "质子溶剂、升温条件下进行",
     mechanism: [
       {
         id: 1,
-        title: "离去基团离去——生成碳正离子",
-        description:
-          "C-Br 键异裂，Br⁻ 带着一对电子离去，碳原子成为 3° 碳正离子。这是决速步。",
+        title: "离解生成碳正离子",
+        description: "离去基先离去，形成平面碳正离子。",
         detailedExplanation:
-          "E1 的第一步与 SN1 完全相同：\n\n1. **键的异裂**：C-Br 键断裂，两个电子都归 Br，形成 Br⁻ 和 (CH₃)₃C⁺\n2. **碳正离子稳定性**：叔碳正离子被三个甲基通过超共轭和诱导效应稳定，这就是为什么 E1 几乎只在叔碳底物上发生\n3. **决速步**：这一步的活化能最高，决定了整个反应的速率\n4. **速率方程**：v = k[(CH₃)₃CBr]，只与底物浓度有关（单分子）\n\n溶剂的作用至关重要：质子溶剂（如乙醇）可以通过氢键稳定离去的 Br⁻ 和碳正离子，降低活化能。",
-        structures: ["(CH₃)₃C—Br → (CH₃)₃C⁺ + Br⁻"],
-        keyConcepts: [
-          {
-            id: "carbocation",
-            name: "碳正离子",
-            brief: "带正电荷的碳原子，sp²杂化，缺电子物种。",
-            detailed: "",
-          },
-          {
-            id: "leaving-group",
-            name: "离去基团",
-            brief: "在反应中带着一对电子离去的基团。",
-            detailed: "",
-          },
-        ],
+          "**1. 电子转移**：C-X 键异裂产生 X⁻ 和碳正离子。\n\n**2. 轨道分析**：形成空 p 轨道，增强邻位 C-H 酸性。\n\n**3. 立体化学**：平面中间体降低立体专一性。\n\n**4. 动力学**：该步为决速步，一级速率。\n\n**5. 关键因素**：极性质子溶剂稳定离子对。",
+        structures: ["(CH₃)₃C-Br → (CH₃)₃C⁺ + Br⁻"],
+        keyConcepts: [{ id: "carbocation", name: "碳正离子", brief: "E1 中间体", detailed: "" }],
       },
       {
         id: 2,
-        title: "碱夺取 β-氢",
-        description:
-          "溶剂分子（EtOH）作为碱，从碳正离子的β碳上夺取一个 H，电子对形成 C=C 双键。",
+        title: "去质子化成烯",
+        description: "碱夺取 β-H，电子形成 π 键。",
         detailedExplanation:
-          "消除步骤的细节：\n\n1. **β-H 的酸性**：碳正离子使得邻位（β位）的 C-H 键酸性增强，因为失去 H 后电子对可以形成稳定的π键\n2. **碱的选择**：E1 通常用弱碱（如溶剂 EtOH），因为碳正离子活性高，不需要强碱\n3. **产物选择性（Zaitsev 规则）**：如果有多个β-H可供消除，优先生成取代度最高（最稳定）的烯烃\n4. **快步骤**：碳正离子一旦生成就迅速反应，这一步活化能低\n\n在本例中，(CH₃)₃C⁺ 只有一种β-H，所以只有一种消除产物。",
-        structures: [
-          "(CH₃)₃C⁺ + EtOH → (CH₃)₂C=CH₂ + EtOH₂⁺",
-        ],
+          "**1. 电子转移**：β-C-H 键电子转移形成 C=C。\n\n**2. 轨道分析**：σ(C-H) 电子转化为 π(C=C) 离域。\n\n**3. 立体化学**：通常给热力学更稳定烯烃。\n\n**4. 动力学**：快步骤，不控制总体速率。\n\n**5. 关键因素**：温度升高和较弱碱均可推动 E1。",
+        structures: ["(CH₃)₃C⁺ + EtOH → (CH₃)₂C=CH₂ + EtOH₂⁺"],
+        keyConcepts: [{ id: "zaitsev-rule", name: "Zaitsev 规则", brief: "优先形成更取代烯烃", detailed: "" }],
+      },
+    ],
+    sideReactions: [{ name: "SN1 竞争", description: "同一碳正离子可被亲核体捕获。", condition: "低温", products: ["叔丁基醚"] }],
+    keyPoints: ["两步机制", "一级动力学", "经碳正离子", "与 SN1 竞争"],
+    factors: ["底物稳定性", "溶剂", "温度", "离去基能力"],
+  },
+  {
+    id: "e2-oh-alkyl-halide",
+    name: "E2 消除（OH⁻ + 卤代烷）",
+    nameEn: "E2 Elimination of Alkyl Halides",
+    category: "elimination",
+    summary: "强碱一步协同夺取 β-H 并同步离去基脱离，形成烯烃。",
+    equation: {
+      reactants: ["CH₃CH₂CH₂Br", "OH⁻"],
+      conditions: ["乙醇, 加热"],
+      products: ["CH₃CH=CH₂", "Br⁻", "H₂O"],
+    },
+    conditions: "强碱 + 升温，反式共平面构型最有利",
+    mechanism: [
+      {
+        id: 1,
+        title: "抗式消除协同发生",
+        description: "OH⁻ 夺取 β-H，同步形成 C=C 并使 Br⁻ 离去。",
+        detailedExplanation:
+          "**1. 电子转移**：碱夺取 β-H，C-H 电子形成 π 键，同时 C-Br 电子转移到 Br。\n\n**2. 轨道分析**：需要 antiperiplanar 构象，保证 σ(C-H) 与 σ*(C-Br) 有效重叠。\n\n**3. 立体化学**：构象控制产物几何，常给反式烯烃。\n\n**4. 动力学**：一步二级，v = k[RX][Base]。\n\n**5. 关键因素**：强碱、高温、底物可达抗式构象。",
+        structures: ["CH₃CH₂CH₂Br + OH⁻ → CH₃CH=CH₂ + Br⁻ + H₂O"],
         keyConcepts: [
-          {
-            id: "basicity",
-            name: "碱性 vs 亲核性",
-            brief: "碱性是热力学性质，亲核性是动力学性质。",
-            detailed: "",
-          },
+          { id: "antiperiplanar", name: "反式共平面", brief: "E2 构型要求", detailed: "" },
+          { id: "zaitsev-rule", name: "Zaitsev 规则", brief: "多取代烯烃优先", detailed: "" },
         ],
       },
     ],
-    sideReactions: [
+    sideReactions: [{ name: "SN2 竞争", description: "伯卤代烷上强亲核体也会取代。", condition: "低温、弱位阻", products: ["醇"] }],
+    keyPoints: ["一步协同", "二级动力学", "要求 antiperiplanar", "升温有利消除"],
+    factors: ["碱强度", "底物位阻", "构象可达性", "温度"],
+  },
+  {
+    id: "br2-alkene-anti-addition",
+    name: "Br₂ 对烯烃的反式加成",
+    nameEn: "Anti Addition of Br2 to Alkenes",
+    category: "addition",
+    summary: "烯烃先形成溴鎓离子，再被 Br⁻ 背面开环，得到反式二溴化物。",
+    equation: {
+      reactants: ["CH₂=CH₂", "Br₂"],
+      conditions: ["CCl₄"],
+      products: ["BrCH₂CH₂Br"],
+    },
+    conditions: "惰性溶剂中进行，避免强亲核溶剂竞争",
+    mechanism: [
       {
-        name: "SN1 取代反应",
-        description:
-          "碳正离子中间体也可以被亲核试剂（如溶剂 EtOH）直接进攻，生成取代产物而非消除产物。E1 和 SN1 共享同一个碳正离子中间体，因此总是竞争发生。",
-        condition: "弱碱/弱亲核试剂，较低温度",
-        products: ["(CH₃)₃C—OEt (叔丁基乙醚)"],
+        id: 1,
+        title: "形成溴鎓离子",
+        description: "π 键极化 Br₂ 并进攻，形成三元环溴鎓中间体。",
+        detailedExplanation:
+          "**1. 电子转移**：π 电子进攻 Br₂，Br-Br 异裂产生 Br⁻。\n\n**2. 轨道分析**：π 轨道与 Br-Br σ* 轨道耦合，形成桥式中间体。\n\n**3. 立体化学**：桥式结构屏蔽同侧进攻。\n\n**4. 动力学**：中间体形成较快，区域选择受正电分布影响。\n\n**5. 关键因素**：烯烃电子密度越高越易反应。",
+        structures: ["CH₂=CH₂ + Br₂ → [CH₂-CH₂-Br]⁺ + Br⁻"],
+        keyConcepts: [{ id: "halonium-ion", name: "卤鎓离子", brief: "三元环正离子中间体", detailed: "" }],
       },
       {
-        name: "碳正离子重排",
-        description:
-          "如果存在可以通过 1,2-迁移生成更稳定碳正离子的途径，重排会在消除之前发生，导致骨架重排的产物。",
-        condition: "邻位有可迁移的 H 或烷基时",
-        products: ["重排烯烃"],
+        id: 2,
+        title: "Br⁻ 背面开环",
+        description: "Br⁻ 从反面进攻并开环，给反式加成产物。",
+        detailedExplanation:
+          "**1. 电子转移**：Br⁻ 进攻环上更缺电子碳，C-Br 桥键断裂。\n\n**2. 轨道分析**：类似 SN2 开环，背面进攻。\n\n**3. 立体化学**：严格 anti addition。\n\n**4. 动力学**：开环快。\n\n**5. 关键因素**：溶剂亲核性决定副产物。",
+        structures: ["[CH₂-CH₂-Br]⁺ + Br⁻ → BrCH₂CH₂Br"],
+        keyConcepts: [{ id: "anti-addition", name: "反式加成", brief: "两基团从相对两侧加入", detailed: "" }],
       },
     ],
-    keyPoints: [
-      "两步反应：C-X 离解（慢）→ 去质子化（快）",
-      "速率方程：v = k[底物]，一级反应",
-      "需要稳定的碳正离子：3° >> 2° > 1°（1°不发生）",
-      "遵循 Zaitsev 规则：生成最稳定（多取代）烯烃",
-      "与 SN1 竞争——升高温度有利于 E1",
-      "质子溶剂有利",
+    sideReactions: [{ name: "卤代醇生成", description: "水存在时水分子开环。", condition: "湿润溶剂", products: ["溴代醇"] }],
+    keyPoints: ["先卤鎓后开环", "反式加成", "不经自由碳正离子"],
+    factors: ["溶剂", "烯烃取代度", "亲核体种类"],
+  },
+  {
+    id: "cyanohydrin-formation",
+    name: "醛酮与 HCN 的亲核加成",
+    nameEn: "Nucleophilic Addition of HCN to Carbonyl",
+    category: "addition",
+    summary: "CN⁻ 进攻羰基碳生成烷氧负离子，再质子化得到氰醇。",
+    equation: {
+      reactants: ["CH₃CHO", "HCN"],
+      conditions: ["NaCN 催化"],
+      products: ["CH₃CH(OH)CN"],
+    },
+    conditions: "弱碱性条件维持 CN⁻ 供给并避免副反应",
+    mechanism: [
+      {
+        id: 1,
+        title: "CN⁻ 进攻羰基",
+        description: "CN⁻ 进攻羰基碳，π 键电子转移到氧形成烷氧负离子。",
+        detailedExplanation:
+          "**1. 电子转移**：CN⁻ 作为亲核体攻击羰基碳，C=O π 电子移向 O。\n\n**2. 轨道分析**：HOMO(CN⁻) 与 LUMO(π* C=O) 重叠。\n\n**3. 立体化学**：平面羰基可双面进攻，手性中心可形成外消旋。\n\n**4. 动力学**：亲核加成是关键步骤。\n\n**5. 关键因素**：羰基电子贫化程度决定速率。",
+        structures: ["CH₃CHO + CN⁻ → CH₃CH(O⁻)CN"],
+        keyConcepts: [{ id: "carbonyl", name: "羰基活化", brief: "C=O 的亲电碳位点", detailed: "" }],
+      },
+      {
+        id: 2,
+        title: "烷氧负离子质子化",
+        description: "烷氧负离子从 HCN 或溶剂获取质子生成氰醇。",
+        detailedExplanation:
+          "**1. 电子转移**：O⁻ 夺取 H⁺。\n\n**2. 轨道分析**：酸碱中和步骤。\n\n**3. 立体化学**：若生成新手性中心，可能出现对映体混合物。\n\n**4. 动力学**：快速质子转移。\n\n**5. 关键因素**：pH 控制决定 CN⁻ 有效浓度。",
+        structures: ["CH₃CH(O⁻)CN + HCN → CH₃CH(OH)CN + CN⁻"],
+        keyConcepts: [{ id: "cyanohydrin", name: "氰醇", brief: "羰基亲核加成产物", detailed: "" }],
+      },
     ],
-    factors: [
-      "底物结构：叔碳 >> 仲碳 > 伯碳（伯碳不发生 E1）",
-      "温度：升温有利于消除（ΔS > 0）",
-      "碱的强度：E1 不需要强碱，弱碱/溶剂即可",
-      "溶剂：质子溶剂（EtOH、H₂O）有利于碳正离子的形成",
+    sideReactions: [{ name: "羟醛副反应", description: "碱过强时醛可自缩合。", condition: "强碱过量", products: ["缩合副产物"] }],
+    keyPoints: ["亲核加成-质子化两步", "CN⁻ 为关键亲核体", "常形成新手性中心"],
+    factors: ["羰基取代度", "pH", "温度", "CN⁻ 浓度"],
+  },
+  {
+    id: "friedel-crafts-acylation",
+    name: "Friedel-Crafts 酰基化",
+    nameEn: "Friedel-Crafts Acylation",
+    category: "substitution",
+    summary: "芳环对酰鎓离子进行亲电取代，得到芳香酮并恢复芳香性。",
+    equation: {
+      reactants: ["C₆H₆", "CH₃COCl"],
+      conditions: ["AlCl₃"],
+      products: ["C₆H₅COCH₃", "HCl"],
+    },
+    conditions: "无水 Lewis 酸条件，避免催化剂失活",
+    mechanism: [
+      {
+        id: 1,
+        title: "生成酰鎓离子",
+        description: "酰氯与 AlCl₃ 配位并离解形成酰鎓亲电体。",
+        detailedExplanation:
+          "**1. 电子转移**：Cl 向 AlCl₃ 供电子后离去，形成 RCO⁺。\n\n**2. 轨道分析**：酰鎓离子由共振稳定，是强亲电体。\n\n**3. 立体化学**：平面亲电体便于芳环进攻。\n\n**4. 动力学**：亲电体生成影响整体速率。\n\n**5. 关键因素**：无水条件与 Lewis 酸强度。",
+        structures: ["CH₃COCl + AlCl₃ → CH₃CO⁺ + AlCl₄⁻"],
+        keyConcepts: [{ id: "acylium-ion", name: "酰鎓离子", brief: "共振稳定亲电体", detailed: "" }],
+      },
+      {
+        id: 2,
+        title: "芳环亲电取代与去质子化",
+        description: "苯环进攻酰鎓形成 σ-络合物，再去质子化恢复芳香性。",
+        detailedExplanation:
+          "**1. 电子转移**：芳环 π 电子进攻酰鎓，随后碱夺 H⁺ 恢复芳香。\n\n**2. 轨道分析**：芳环 HOMO 与酰鎓 LUMO 作用。\n\n**3. 立体化学**：无重排，区域选择受取代基导向。\n\n**4. 动力学**：σ-络合物形成通常为能垒较高步骤。\n\n**5. 关键因素**：取代基活化/钝化效应显著。",
+        structures: ["C₆H₆ + CH₃CO⁺ → σ-络合物 → C₆H₅COCH₃ + H⁺"],
+        keyConcepts: [{ id: "electrophilic-aromatic-substitution", name: "芳香亲电取代", brief: "EAS 经典机制", detailed: "" }],
+      },
     ],
+    sideReactions: [{ name: "多酰化受限", description: "酰基钝化芳环，二次取代显著降低。", condition: "过量底物", products: ["少量二酰化物"] }],
+    keyPoints: ["经酰鎓离子", "EAS 机理", "通常不重排", "产物较稳定"],
+    factors: ["芳环活化程度", "Lewis 酸强度", "无水条件", "温度"],
+  },
+  {
+    id: "methane-chlorination",
+    name: "甲烷氯代自由基取代",
+    nameEn: "Radical Chlorination of Methane",
+    category: "radical",
+    summary: "光照下 Cl₂ 发生均裂，经历链引发-增长-终止，得到氯甲烷。",
+    equation: {
+      reactants: ["CH₄", "Cl₂"],
+      conditions: ["hν"],
+      products: ["CH₃Cl", "HCl"],
+    },
+    conditions: "紫外光或高温引发自由基链反应",
+    mechanism: [
+      {
+        id: 1,
+        title: "链引发",
+        description: "Cl₂ 光解均裂生成两个 Cl·。",
+        detailedExplanation:
+          "**1. 电子转移**：Cl-Cl 键均裂，每个 Cl 各得一个电子。\n\n**2. 轨道分析**：σ 键在光激发下断裂。\n\n**3. 立体化学**：自由基步骤通常立体选择弱。\n\n**4. 动力学**：引发步慢但决定反应开始。\n\n**5. 关键因素**：光强与温度。",
+        structures: ["Cl₂ --hν→ 2 Cl·"],
+        keyConcepts: [{ id: "radical-initiation", name: "自由基引发", brief: "链反应启动步骤", detailed: "" }],
+      },
+      {
+        id: 2,
+        title: "链增长",
+        description: "Cl· 抽氢生成 CH₃·，CH₃· 再与 Cl₂ 反应生成 CH₃Cl 并再生 Cl·。",
+        detailedExplanation:
+          "**1. 电子转移**：Cl· 抽取 H 后产生 CH₃·；CH₃· 进攻 Cl₂ 再生 Cl·。\n\n**2. 轨道分析**：单电子过程，SOMO 参与反应。\n\n**3. 立体化学**：甲烷无手性问题。\n\n**4. 动力学**：增长步循环导致量子产率高。\n\n**5. 关键因素**：反应物比例决定过氯化概率。",
+        structures: ["Cl· + CH₄ → HCl + CH₃·", "CH₃· + Cl₂ → CH₃Cl + Cl·"],
+        keyConcepts: [{ id: "radical-chain", name: "链式反应", brief: "自由基循环再生", detailed: "" }],
+      },
+    ],
+    sideReactions: [{ name: "过度氯化", description: "继续取代可生成 CH₂Cl₂、CHCl₃、CCl₄。", condition: "Cl₂ 过量/长时间照射", products: ["CH₂Cl₂", "CHCl₃", "CCl₄"] }],
+    keyPoints: ["均裂引发", "链增长主导", "可多步氯化", "需控制停留时间"],
+    factors: ["光照强度", "Cl₂ 比例", "反应时间", "温度"],
+  },
+  {
+    id: "pcc-oxidation-alcohol",
+    name: "PCC 氧化醇",
+    nameEn: "Oxidation of Alcohols by PCC",
+    category: "oxidation",
+    summary: "PCC 可将一级醇温和氧化到醛、二级醇氧化到酮，通常避免过氧化。",
+    equation: {
+      reactants: ["RCH₂OH", "PCC"],
+      conditions: ["CH₂Cl₂"],
+      products: ["RCHO"],
+    },
+    conditions: "无水条件下温和氧化，避免醛进一步氧化",
+    mechanism: [
+      {
+        id: 1,
+        title: "形成铬酸酯",
+        description: "醇氧与 Cr(VI) 配位生成铬酸酯中间体。",
+        detailedExplanation:
+          "**1. 电子转移**：醇氧孤对与 Cr 中心配位。\n\n**2. 轨道分析**：Lewis 酸碱相互作用形成可消除中间体。\n\n**3. 立体化学**：不改变骨架构型，仅发生官能团氧化。\n\n**4. 动力学**：中间体形成较快。\n\n**5. 关键因素**：无水环境抑制副反应。",
+        structures: ["RCH₂OH + PCC → RCH₂O-Cr 中间体"],
+        keyConcepts: [{ id: "chromate-ester", name: "铬酸酯", brief: "PCC 氧化关键中间体", detailed: "" }],
+      },
+      {
+        id: 2,
+        title: "β-消除生成羰基",
+        description: "碱夺取 α-H，发生类 E2 消除生成羰基。",
+        detailedExplanation:
+          "**1. 电子转移**：C-H 电子形成 C=O，Cr-O 键断裂。\n\n**2. 轨道分析**：σ(C-H) 向 π(C=O) 转化。\n\n**3. 立体化学**：通常保持碳骨架不变。\n\n**4. 动力学**：消除步骤决定产物形成速率。\n\n**5. 关键因素**：底物类型决定停留在醛还是酮。",
+        structures: ["RCH₂O-Cr → RCHO"],
+        keyConcepts: [{ id: "oxidation-state", name: "氧化态变化", brief: "碳被氧化、铬被还原", detailed: "" }],
+      },
+    ],
+    sideReactions: [{ name: "过氧化", description: "含水或过强氧化条件下醛可继续氧化为酸。", condition: "含水环境", products: ["RCOOH"] }],
+    keyPoints: ["温和选择性高", "一级醇→醛", "二级醇→酮", "需无水"],
+    factors: ["底物类型", "含水量", "温度", "氧化剂当量"],
+  },
+  {
+    id: "fischer-esterification",
+    name: "Fischer 酯化",
+    nameEn: "Fischer Esterification",
+    category: "addition",
+    summary: "羧酸与醇在酸催化下可逆缩合成酯，需移除水推动平衡。",
+    equation: {
+      reactants: ["CH₃COOH", "CH₃CH₂OH"],
+      conditions: ["H₂SO₄, 加热"],
+      products: ["CH₃COOCH₂CH₃", "H₂O"],
+    },
+    conditions: "酸催化并持续脱水以提高酯收率",
+    mechanism: [
+      {
+        id: 1,
+        title: "羰基活化与醇进攻",
+        description: "羧酸羰基先被质子化，随后乙醇亲核进攻。",
+        detailedExplanation:
+          "**1. 电子转移**：羰基氧先受质子活化，随后醇氧孤对进攻羰基碳。\n\n**2. 轨道分析**：质子化降低 π* 轨道能级，增强亲电性。\n\n**3. 立体化学**：经四面体中间体，不涉及手性控制。\n\n**4. 动力学**：亲核进攻与后续质子转移共同控制速率。\n\n**5. 关键因素**：酸强度与醇浓度。",
+        structures: ["CH₃COOH + H⁺ + EtOH → 四面体中间体"],
+        keyConcepts: [{ id: "tetrahedral-intermediate", name: "四面体中间体", brief: "酰基取代常见中间体", detailed: "" }],
+      },
+      {
+        id: 2,
+        title: "水离去与去质子化",
+        description: "中间体经质子转移后脱水，最后去质子化得到酯。",
+        detailedExplanation:
+          "**1. 电子转移**：羟基转化为更好离去基（水），离去后重建羰基。\n\n**2. 轨道分析**：孤对回落形成 π 键。\n\n**3. 立体化学**：主要是官能团互变。\n\n**4. 动力学**：可逆反应，平衡控制更关键。\n\n**5. 关键因素**：移水、过量醇、酸催化循环。",
+        structures: ["四面体中间体 → CH₃COOCH₂CH₃ + H₂O + H⁺"],
+        keyConcepts: [{ id: "equilibrium-shift", name: "平衡移动", brief: "勒夏特列原理提升收率", detailed: "" }],
+      },
+    ],
+    sideReactions: [{ name: "酸催化脱水", description: "乙醇在强酸高温下可脱水成乙烯。", condition: "高温浓硫酸", products: ["CH₂=CH₂"] }],
+    keyPoints: ["酸催化可逆", "四面体中间体", "脱水推动平衡", "常需回流"],
+    factors: ["酸浓度", "温度", "移水效率", "醇/酸比例"],
+  },
+  {
+    id: "electrophilic-addition-hbr",
+    name: "HBr 对烯烃的亲电加成",
+    nameEn: "Electrophilic Addition of HBr to Alkenes",
+    category: "addition",
+    summary: "离子机制下遵循 Markovnikov 规则；过氧化物存在时可走自由基反马氏路径。",
+    equation: {
+      reactants: ["CH₃CH=CH₂", "HBr"],
+      conditions: [],
+      products: ["CH₃CHBrCH₃"],
+    },
+    conditions: "常温下即可反应，过氧化物会改变机制",
+    mechanism: [
+      {
+        id: 1,
+        title: "质子化形成碳正离子",
+        description: "π 键进攻 H⁺，优先形成更稳定碳正离子。",
+        detailedExplanation:
+          "**1. 电子转移**：π 电子进攻 H-Br 的 H，Br 以 Br⁻ 形式离去。\n\n**2. 轨道分析**：烯烃 HOMO 与 H-Br σ* 作用。\n\n**3. 立体化学**：经平面碳正离子，可能失去立体专一性。\n\n**4. 动力学**：质子化通常是决速步。\n\n**5. 关键因素**：碳正离子稳定性决定区域选择。",
+        structures: ["CH₃CH=CH₂ + HBr → CH₃C⁺HCH₃ + Br⁻"],
+        keyConcepts: [{ id: "markovnikov", name: "Markovnikov 规则", brief: "氢加氢多", detailed: "" }],
+      },
+      {
+        id: 2,
+        title: "Br⁻ 捕获碳正离子",
+        description: "Br⁻ 快速进攻碳正离子得到产物。",
+        detailedExplanation:
+          "**1. 电子转移**：Br⁻ 向碳正离子提供电子对形成 C-Br。\n\n**2. 轨道分析**：孤对填充空 p 轨道。\n\n**3. 立体化学**：若形成手性中心可有外消旋。\n\n**4. 动力学**：快速捕获步骤。\n\n**5. 关键因素**：亲核体浓度与溶剂。",
+        structures: ["CH₃C⁺HCH₃ + Br⁻ → CH₃CHBrCH₃"],
+        keyConcepts: [{ id: "carbocation", name: "碳正离子", brief: "区域选择与重排来源", detailed: "" }],
+      },
+    ],
+    sideReactions: [{ name: "过氧化物效应", description: "自由基链机制导致反 Markovnikov 加成。", condition: "ROOR + hν", products: ["CH₃CH₂CH₂Br"] }],
+    keyPoints: ["离子机制两步", "Markovnikov 选择性", "可被自由基路径改写"],
+    factors: ["过氧化物", "溶剂", "底物取代度"],
   },
 ];
 
